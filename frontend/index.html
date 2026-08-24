@@ -1,98 +1,879 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
   <title>Smart Energy System</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/chart.js"
+  ></script>
+
 </head>
+
 
 <body>
 
-<!-- LOGIN -->
-<div id="loginPage" class="center">
-  <h2>⚡ Smart Energy Login</h2>
-  <input id="username" placeholder="Username">
-  <input id="password" type="password" placeholder="Password">
-  <button onclick="login()">Login</button>
-</div>
 
-<!-- APP -->
-<div id="app" class="hidden">
+<!-- =========================================================
+     AUTHENTICATION
+========================================================== -->
 
-<div class="sidebar">
-  <h2>⚡ Smart Meter</h2>
-  <button onclick="showPage('dashboard')">Dashboard</button>
-  <button onclick="showPage('appliances')">Appliances</button>
-  <button onclick="showPage('analytics')">Analytics</button>
-  <button onclick="showPage('budget')">Budget</button>
-  <button onclick="showPage('blockchain')">Blockchain</button>
-</div>
+<div
+  id="loginPage"
+  class="center"
+>
 
-<div class="main">
+  <!-- LOGIN -->
 
-<!-- DASHBOARD -->
-<div id="dashboard" class="page">
-  <h2>Dashboard</h2>
+  <div id="loginForm">
 
-  <div class="meter">
-    <p>⚡ Power: <span id="power"></span></p>
-    <p>🔌 Current: <span id="current"></span></p>
-    <p>🔋 Energy: <span id="energy"></span></p>
-    <p>⏱ Hour: <span id="hour"></span></p>
+    <h2>
+      ⚡ Smart Energy Login
+    </h2>
+
+    <input
+      id="username"
+      type="text"
+      placeholder="Username"
+      autocomplete="username"
+    >
+
+    <input
+      id="password"
+      type="password"
+      placeholder="Password"
+      autocomplete="current-password"
+    >
+
+    <button
+      onclick="login()"
+    >
+      Login
+    </button>
+
+    <p class="auth-switch">
+      Don't have an account?
+      <button
+        type="button"
+        class="auth-link"
+        onclick="showSignup()"
+      >
+        Sign Up
+      </button>
+    </p>
+
   </div>
 
-  <canvas id="liveChart"></canvas>
 
-  <h3>Prediction</h3>
-  <p id="prediction"></p>
+  <!-- SIGN UP -->
 
-  <h3>Alerts</h3>
-  <p id="alerts"></p>
+  <div
+    id="signupForm"
+    class="hidden"
+  >
+
+    <h2>
+      ⚡ Create Account
+    </h2>
+
+    <input
+      id="signupUsername"
+      type="text"
+      placeholder="Username"
+      autocomplete="username"
+    >
+
+    <input
+      id="signupPassword"
+      type="password"
+      placeholder="Password"
+      autocomplete="new-password"
+    >
+
+    <input
+      id="signupConfirmPassword"
+      type="password"
+      placeholder="Confirm Password"
+      autocomplete="new-password"
+    >
+
+    <button
+      onclick="signup()"
+    >
+      Sign Up
+    </button>
+
+    <p class="auth-switch">
+      Already have an account?
+      <button
+        type="button"
+        class="auth-link"
+        onclick="showLogin()"
+      >
+        Login
+      </button>
+    </p>
+
+  </div>
+
 </div>
 
-<!-- APPLIANCES -->
-<div id="appliances" class="page hidden">
-  <h2>Appliances</h2>
-  <div id="applianceList"></div>
 
-  <h3>Add Appliance</h3>
-  <input id="name" placeholder="Name">
-  <input id="powerInput" placeholder="Power">
-  <input id="count" placeholder="Count">
-  <button onclick="addAppliance()">Add</button>
+
+  <!-- =========================================================
+       APPLICATION
+  ========================================================== -->
+
+  <div
+    id="app"
+    class="hidden"
+  >
+
+
+    <!-- =======================================================
+         SIDEBAR
+    ======================================================== -->
+
+    <div class="sidebar">
+
+      <h2>
+        ⚡ Smart Meter
+      </h2>
+
+
+      <button
+        onclick="showPage('dashboard')"
+      >
+        Dashboard
+      </button>
+
+
+      <button
+        onclick="showPage('estimate')"
+      >
+        Energy Estimate
+      </button>
+
+
+      <button
+        onclick="showPage('appliances')"
+      >
+        Appliances
+      </button>
+
+
+      <button
+        onclick="showPage('analytics')"
+      >
+        Analytics
+      </button>
+
+
+      <button
+        onclick="showPage('budget')"
+      >
+        Budget
+      </button>
+
+
+      <button
+        onclick="showPage('blockchain')"
+      >
+        Blockchain
+      </button>
+
+    </div>
+
+
+
+    <!-- =======================================================
+         MAIN CONTENT
+    ======================================================== -->
+
+    <div class="main">
+
+
+
+<!-- =====================================================
+     DASHBOARD
+====================================================== -->
+
+<div id="dashboard" class="page">
+
+  <div class="dashboard-header">
+
+    <h2>Smart Energy Dashboard</h2>
+
+    <p class="dashboard-subtitle">
+      Real-time household energy monitoring and AI-assisted demand forecasting
+    </p>
+
+  </div>
+
+
+  <!-- ===================================================
+       LIVE METRICS
+  ==================================================== -->
+
+  <div class="dashboard-metrics">
+
+
+    <div class="dashboard-metric">
+
+      <span class="dashboard-metric-label">
+        Current Power
+      </span>
+
+      <span
+        id="power"
+        class="dashboard-metric-value"
+      >
+        0
+      </span>
+
+      <span class="dashboard-metric-unit">
+        W
+      </span>
+
+    </div>
+
+
+    <div class="dashboard-metric">
+
+      <span class="dashboard-metric-label">
+        Current
+      </span>
+
+      <span
+        id="current"
+        class="dashboard-metric-value"
+      >
+        0
+      </span>
+
+      <span class="dashboard-metric-unit">
+        A
+      </span>
+
+    </div>
+
+
+    <div class="dashboard-metric">
+
+      <span class="dashboard-metric-label">
+        Energy Consumed
+      </span>
+
+      <span
+        id="energy"
+        class="dashboard-metric-value"
+      >
+        0
+      </span>
+
+      <span class="dashboard-metric-unit">
+        kWh
+      </span>
+
+    </div>
+
+
+    <div class="dashboard-metric">
+
+      <span class="dashboard-metric-label">
+        Simulation Hour
+      </span>
+
+      <span
+        id="hour"
+        class="dashboard-metric-value"
+      >
+        0
+      </span>
+
+      <span class="dashboard-metric-unit">
+        hr
+      </span>
+
+    </div>
+
+
+  </div>
+
+
+  <!-- ===================================================
+       LIVE CHART
+  ==================================================== -->
+
+  <div class="dashboard-chart-card">
+
+    <div class="dashboard-chart-header">
+
+      <h3>
+        Live Energy Consumption
+      </h3>
+
+      <span class="live-indicator">
+        LIVE
+      </span>
+
+    </div>
+
+
+    <div class="dashboard-chart-wrapper">
+
+      <canvas id="liveChart"></canvas>
+
+    </div>
+
+  </div>
+
+
+  <!-- ===================================================
+       AI + ALERTS
+  ==================================================== -->
+
+  <div class="dashboard-info-grid">
+
+
+<!-- AI FORECAST -->
+
+<div class="dashboard-info-card">
+
+  <h3>
+    AI Household Forecast
+  </h3>
+
+  <div
+    id="prediction"
+    class="forecast-value"
+  >
+    Loading forecast...
+  </div>
+
+  <div
+    id="predictionMeta"
+    class="forecast-meta"
+  >
+    Forecasting household consumption...
+  </div>
+
 </div>
 
-<!-- ANALYTICS -->
-<div id="analytics" class="page hidden">
-  <h2>Analytics</h2>
-  <canvas id="hourlyChart"></canvas>
-  <canvas id="weeklyChart"></canvas>
-  <canvas id="monthlyChart"></canvas>
+    <!-- ALERTS -->
+
+    <div
+      id="alertCard"
+      class="dashboard-info-card"
+    >
+
+      <h3>
+        System Alerts
+      </h3>
+
+      <p id="alerts">
+        No alerts.
+      </p>
+
+    </div>
+
+
+  </div>
+
 </div>
 
-<!-- BUDGET -->
-<div id="budget" class="page hidden">
-  <h2>Budget</h2>
 
-  <input id="budgetInput" placeholder="Monthly Budget">
-  <button onclick="setBudget()">Set</button>
 
-  <h3>Plan</h3>
-  <div id="planBox"></div>
+      <!-- =====================================================
+           ENERGY ESTIMATE
+      ====================================================== -->
 
-  <h3>Summary</h3>
-  <div id="summary"></div>
-</div>
+      <div
+        id="estimate"
+        class="page hidden"
+      >
 
-<!-- BLOCKCHAIN -->
+        <h2>
+          ⚡ Energy Consumption Estimate
+        </h2>
+
+
+
+        <!-- HOUSEHOLD DETAILS -->
+
+        <div class="card">
+
+          <h3>
+            Household Details
+          </h3>
+
+
+          <label
+            for="householdSize"
+          >
+            Household Size
+          </label>
+
+
+          <input
+            id="householdSize"
+            type="number"
+            min="1"
+            value="4"
+            placeholder="Number of people"
+          >
+
+        </div>
+
+
+
+        <!-- APPLIANCE INPUT -->
+
+        <div class="card">
+
+          <h3>
+            Appliances
+          </h3>
+
+
+          <p class="description">
+
+            Enter the appliances in your household,
+            their power rating, quantity and average
+            daily usage.
+
+          </p>
+
+
+          <div
+            id="estimateAppliances"
+          ></div>
+
+
+          <button
+            type="button"
+            onclick="addEstimateAppliance()"
+          >
+            + Add Appliance
+          </button>
+
+        </div>
+
+
+
+        <!-- CALCULATE -->
+
+        <div class="card">
+
+          <button
+            class="primary-button"
+            onclick="calculateEstimate()"
+          >
+            ⚡ Calculate Consumption
+          </button>
+
+        </div>
+
+
+
+        <!-- RESULTS -->
+
+        <div
+          id="estimateResult"
+          class="hidden"
+        >
+
+
+          <!-- ESTIMATE TOTALS -->
+
+          <div class="meter">
+
+            <h3>
+              📊 Your Energy Estimate
+            </h3>
+
+
+            <div class="result-grid">
+
+
+              <!-- DAILY -->
+
+              <div class="result-box">
+
+                <span class="result-icon">
+                  ⚡
+                </span>
+
+
+                <p>
+                  Daily Consumption
+                </p>
+
+
+                <strong>
+
+                  <span
+                    id="estimatedDaily"
+                  >
+                    0
+                  </span>
+
+                  kWh
+
+                </strong>
+
+              </div>
+
+
+
+              <!-- MONTHLY -->
+
+              <div class="result-box">
+
+                <span class="result-icon">
+                  📅
+                </span>
+
+
+                <p>
+                  Monthly Consumption
+                </p>
+
+
+                <strong>
+
+                  <span
+                    id="estimatedMonthly"
+                  >
+                    0
+                  </span>
+
+                  kWh
+
+                </strong>
+
+              </div>
+
+
+
+              <!-- BILL -->
+
+              <div class="result-box">
+
+                <span class="result-icon">
+                  💰
+                </span>
+
+
+                <p>
+                  Estimated Monthly Bill
+                </p>
+
+
+                <strong>
+
+                  ₹<span
+                    id="estimatedBill"
+                  >
+                    0
+                  </span>
+
+                </strong>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+
+          <!-- BREAKDOWN -->
+
+          <div class="card">
+
+            <h3>
+              📋 Appliance Breakdown
+            </h3>
+
+
+            <div
+              id="estimateBreakdown"
+            ></div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- =====================================================
+           APPLIANCES
+      ====================================================== -->
+
+      <div
+        id="appliances"
+        class="page hidden"
+      >
+
+        <h2>
+          Appliances
+        </h2>
+
+
+        <div
+          id="applianceList"
+        ></div>
+
+
+
+        <!-- ADD APPLIANCE -->
+
+        <div class="card">
+
+          <h3>
+            Add Appliance
+          </h3>
+
+
+          <input
+            id="name"
+            type="text"
+            placeholder="Name"
+          >
+
+
+          <input
+            id="powerInput"
+            type="number"
+            min="1"
+            placeholder="Power (W)"
+          >
+
+
+          <input
+            id="count"
+            type="number"
+            min="1"
+            placeholder="Count"
+          >
+
+
+          <button
+            type="button"
+            onclick="addAppliance()"
+          >
+            Add
+          </button>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- =====================================================
+           ANALYTICS
+      ====================================================== -->
+
+      <div
+        id="analytics"
+        class="page hidden"
+      >
+
+        <h2>
+          Analytics
+        </h2>
+
+
+
+        <!-- ANALYTICS SUMMARY -->
+
+        <div
+          id="analyticsSummary"
+          class="analytics-summary"
+        ></div>
+
+
+
+        <!-- HOURLY -->
+
+        <div class="card">
+
+          <h3>
+            Hourly Consumption
+          </h3>
+
+
+          <canvas
+            id="hourlyChart"
+          ></canvas>
+
+        </div>
+
+
+
+        <!-- WEEKLY -->
+
+        <div class="card">
+
+          <h3>
+            Weekly Consumption
+          </h3>
+
+
+          <canvas
+            id="weeklyChart"
+          ></canvas>
+
+        </div>
+
+
+
+        <!-- MONTHLY -->
+
+        <div class="card">
+
+          <h3>
+            Monthly Consumption
+          </h3>
+
+
+          <canvas
+            id="monthlyChart"
+          ></canvas>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- =====================================================
+           BUDGET
+      ====================================================== -->
+
+      <div
+        id="budget"
+        class="page hidden"
+      >
+
+        <h2>
+          Budget
+        </h2>
+
+
+
+        <!-- SET BUDGET -->
+
+        <div class="card">
+
+          <h3>
+            💰 Monthly Budget
+          </h3>
+
+
+          <input
+            id="budgetInput"
+            type="number"
+            min="1"
+            placeholder="Monthly Budget (₹)"
+          >
+
+
+          <button
+            type="button"
+            onclick="setBudget()"
+          >
+            Set Budget
+          </button>
+
+        </div>
+
+
+
+        <!-- ENERGY SAVING PLAN -->
+
+        <div class="card">
+
+          <h3>
+            💡 Energy Saving Plan
+          </h3>
+
+
+          <div
+            id="planBox"
+          ></div>
+
+        </div>
+
+
+
+        <!-- MONTHLY SUMMARY -->
+
+        <div class="card">
+
+          <h3>
+            📋 Monthly Summary
+          </h3>
+
+
+          <div
+            id="summary"
+          ></div>
+
+        </div>
+
+      </div>
+
+
+
+<!-- =====================================================
+     BLOCKCHAIN
+====================================================== -->
+
 <div id="blockchain" class="page hidden">
-  <h2>Blockchain</h2>
+
+  <div class="blockchain-header">
+
+    <h2>⛓ Blockchain Billing</h2>
+
+    <p class="blockchain-subtitle">
+      Secure, tamper-evident electricity billing ledger
+    </p>
+
+  </div>
+
   <div id="chain"></div>
-</div>
 
 </div>
-</div>
 
-<script src="script.js"></script>
+
+
+  <!-- =========================================================
+       JAVASCRIPT
+  ========================================================== -->
+
+  <script
+    src="script.js"
+  ></script>
+
+
 </body>
+
 </html>

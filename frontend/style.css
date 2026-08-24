@@ -1,66 +1,2394 @@
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
-  font-family: Arial;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
   background: #050816;
+
   color: cyan;
+
+  min-height: 100vh;
 }
+
+
+/* =========================================================
+   LOGIN
+========================================================= */
 
 .center {
+  width: 100%;
+
+  max-width: 420px;
+
+  margin: 100px auto 0;
+
+  padding: 30px;
+
   text-align: center;
-  margin-top: 100px;
+
+  border: 1px solid cyan;
+
+  box-shadow:
+    0 0 20px rgba(0, 255, 255, 0.25);
 }
 
-.hidden { display:none; }
+.center h2 {
+  margin-top: 0;
+
+  margin-bottom: 30px;
+
+  font-size: 28px;
+}
+
+
+/* =========================================================
+   INPUTS
+========================================================= */
+
+input {
+  padding: 11px 12px;
+
+  margin: 5px;
+
+  border: 1px solid cyan;
+
+  background: #050816;
+
+  color: cyan;
+
+  outline: none;
+
+  border-radius: 3px;
+
+  font-size: 14px;
+
+  transition:
+    box-shadow 0.2s,
+    border-color 0.2s;
+}
+
+input:focus {
+  border-color: #ffffff;
+
+  box-shadow:
+    0 0 8px rgba(0, 255, 255, 0.4);
+}
+
+input::placeholder {
+  color: #7fffff;
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+button {
+  padding: 10px 15px;
+
+  border: 1px solid cyan;
+
+  background: transparent;
+
+  color: cyan;
+
+  cursor: pointer;
+
+  border-radius: 3px;
+
+  font-size: 14px;
+
+  transition:
+    background 0.2s,
+    color 0.2s,
+    box-shadow 0.2s,
+    transform 0.1s;
+}
+
+button:hover {
+  background: cyan;
+
+  color: black;
+
+  box-shadow:
+    0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+
+/* =========================================================
+   UTILITY
+========================================================= */
+
+.hidden {
+  display: none !important;
+}
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
 
 .sidebar {
   position: fixed;
+
+  left: 0;
+
+  top: 0;
+
   width: 220px;
-  height: 100%;
-  background: black;
+
+  height: 100vh;
+
+  background: #000000;
+
   padding: 20px;
+
+  border-right: 1px solid cyan;
+
+  overflow-y: auto;
+
+  z-index: 1000;
+}
+
+.sidebar h2 {
+  margin-top: 0;
+
+  margin-bottom: 30px;
+
+  font-size: 22px;
+
+  text-align: center;
 }
 
 .sidebar button {
   width: 100%;
-  margin: 10px 0;
-  padding: 10px;
+
+  margin: 8px 0;
+
+  padding: 12px;
+
   border: 1px solid cyan;
+
   background: transparent;
+
   color: cyan;
+
   cursor: pointer;
+
+  text-align: left;
 }
 
-.main {
-  margin-left: 240px;
-  padding: 20px;
+.sidebar button:hover {
+  background: cyan;
+
+  color: black;
 }
+
+
+/* =========================================================
+   MAIN CONTENT
+========================================================= */
+
+.main {
+  margin-left: 220px;
+
+  padding: 25px;
+
+  min-height: 100vh;
+
+  width: calc(100% - 220px);
+}
+
+.page {
+  width: 100%;
+
+  max-width: 1400px;
+
+  margin: 0 auto;
+}
+
+.page > h2 {
+  margin-top: 0;
+
+  margin-bottom: 25px;
+
+  font-size: 28px;
+}
+
+
+/* =========================================================
+   METER / DASHBOARD
+========================================================= */
 
 .meter {
   border: 2px solid cyan;
+
   padding: 20px;
-  box-shadow: 0 0 15px cyan;
+
+  box-shadow:
+    0 0 15px rgba(0, 255, 255, 0.5);
+
+  margin-bottom: 20px;
+
+  background:
+    rgba(0, 255, 255, 0.02);
+}
+
+.meter h3 {
+  margin-top: 0;
+}
+
+.meter p {
+  font-size: 18px;
+
+  margin: 12px 0;
+
+  line-height: 1.5;
+}
+
+.meter span {
+  font-weight: bold;
+}
+
+
+/* =========================================================
+   CARDS
+========================================================= */
+
+.card {
+  border: 1px solid cyan;
+
+  padding: 18px;
+
+  margin: 15px 0;
+
+  background:
+    rgba(0, 255, 255, 0.02);
+
+  box-shadow:
+    0 0 5px rgba(0, 255, 255, 0.08);
+}
+
+.card h3 {
+  margin-top: 0;
+
+  margin-bottom: 15px;
+}
+
+.card p {
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.description {
+  color: #9fffff;
+
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   APPLIANCES
+========================================================= */
+
+#applianceList {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 10px;
+
   margin-bottom: 20px;
 }
 
 .appliance-btn {
-  margin: 5px;
-  padding: 10px;
+  margin: 0;
+
+  padding: 11px 16px;
+
   border: 1px solid cyan;
+
+  min-width: 110px;
+
+  text-align: center;
 }
 
 .appliance-btn.active {
   background: cyan;
+
+  color: black;
+
+  box-shadow:
+    0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+
+/* =========================================================
+   ENERGY ESTIMATOR
+========================================================= */
+
+.estimate-row {
+  display: flex;
+
+  gap: 10px;
+
+  margin: 12px 0;
+
+  padding: 12px;
+
+  border: 1px solid
+    rgba(0, 255, 255, 0.3);
+
+  flex-wrap: wrap;
+
+  align-items: center;
+
+  background:
+    rgba(0, 255, 255, 0.015);
+}
+
+.estimate-row input {
+  margin: 0;
+
+  min-width: 120px;
+
+  flex: 1;
+}
+
+.estimate-row button {
+  flex-shrink: 0;
+}
+
+
+/* =========================================================
+   PRIMARY BUTTON
+========================================================= */
+
+.primary-button {
+  font-size: 16px;
+
+  padding: 12px 20px;
+
+  font-weight: bold;
+
+  width: auto;
+}
+
+
+/* =========================================================
+   ESTIMATE RESULTS
+========================================================= */
+
+.result-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 15px;
+
+  margin-top: 20px;
+}
+
+.result-box {
+  border: 1px solid cyan;
+
+  padding: 20px;
+
+  text-align: center;
+
+  background:
+    rgba(0, 255, 255, 0.02);
+
+  box-shadow:
+    0 0 8px
+    rgba(0, 255, 255, 0.4);
+}
+
+.result-icon {
+  display: block;
+
+  font-size: 28px;
+
+  margin-bottom: 10px;
+}
+
+.result-box p {
+  margin: 5px 0;
+
+  color: #9fffff;
+}
+
+.result-box strong {
+  display: block;
+
+  margin-top: 10px;
+
+  font-size: 24px;
+}
+
+
+/* =========================================================
+   ANALYTICS SUMMARY
+========================================================= */
+
+.analytics-summary {
+  display: grid;
+
+  grid-template-columns:
+    repeat(5, 1fr);
+
+  gap: 15px;
+
+  margin-bottom: 25px;
+}
+
+.analytics-summary .card {
+  margin: 0;
+
+  padding: 18px;
+
+  min-height: 130px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+}
+
+.analytics-summary h3 {
+  margin-top: 0;
+
+  margin-bottom: 10px;
+
+  font-size: 15px;
+
+  color: #9fffff;
+}
+
+.analytics-summary p {
+  margin: 0;
+
+  font-size: 22px;
+
+  font-weight: bold;
+
+  color: cyan;
+}
+
+
+/* =========================================================
+   CHARTS
+========================================================= */
+
+canvas {
+  display: block;
+
+  width: 100% !important;
+
+  max-width: 100%;
+
+  margin-bottom: 20px;
+}
+
+#liveChart {
+  min-height: 250px;
+}
+
+#hourlyChart,
+#weeklyChart,
+#monthlyChart {
+  min-height: 280px;
+}
+
+
+/* =========================================================
+   BLOCKCHAIN
+========================================================= */
+
+#chain {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 15px;
+
+  width: 100%;
+}
+
+
+/* =========================================================
+   BLOCKCHAIN SUMMARY
+========================================================= */
+
+#chain .blockchain-summary {
+  margin: 0 0 10px 0;
+
+  padding: 22px;
+
+  border: 2px solid cyan;
+
+  box-shadow:
+    0 0 15px rgba(0, 255, 255, 0.25);
+}
+
+.blockchain-summary h2 {
+  margin-top: 0;
+
+  margin-bottom: 20px;
+
+  font-size: 24px;
+}
+
+
+/* =========================================================
+   BLOCKCHAIN VALIDATION STATUS
+========================================================= */
+
+.blockchain-valid {
+  border: 1px solid cyan;
+
+  padding: 15px;
+
+  margin: 15px 0;
+
+  background:
+    rgba(0, 255, 255, 0.05);
+
+  box-shadow:
+    0 0 10px
+    rgba(0, 255, 255, 0.2);
+}
+
+.blockchain-valid strong {
+  font-size: 17px;
+
+  color: cyan;
+}
+
+.blockchain-valid p {
+  margin-bottom: 0;
+
+  color: #9fffff;
+}
+
+
+.blockchain-invalid {
+  border: 1px solid #ff4d4d;
+
+  padding: 15px;
+
+  margin: 15px 0;
+
+  background:
+    rgba(255, 0, 0, 0.05);
+
+  box-shadow:
+    0 0 10px
+    rgba(255, 0, 0, 0.2);
+
+  color: #ff8080;
+}
+
+.blockchain-invalid strong {
+  font-size: 17px;
+
+  color: #ff4d4d;
+}
+
+.blockchain-invalid p {
+  margin-bottom: 0;
+
+  color: #ffaaaa;
+}
+
+
+/* =========================================================
+   BLOCKCHAIN STATISTICS
+========================================================= */
+
+.blockchain-stats {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 15px;
+
+  margin-top: 15px;
+}
+
+.blockchain-stats .card {
+  margin: 0;
+
+  padding: 18px;
+
+  text-align: center;
+
+  min-height: 110px;
+}
+
+.blockchain-stats h3 {
+  margin-bottom: 10px;
+
+  font-size: 15px;
+
+  color: #9fffff;
+}
+
+.blockchain-stats p {
+  margin: 0;
+
+  font-size: 22px;
+
+  font-weight: bold;
+
+  color: cyan;
+}
+
+
+/* =========================================================
+   BLOCKCHAIN BLOCK LIST
+========================================================= */
+
+.blockchain-blocks {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 15px;
+}
+
+
+/* =========================================================
+   INDIVIDUAL BLOCK
+========================================================= */
+
+#chain .blockchain-block {
+  margin: 0;
+
+  padding: 20px;
+
+  border: 1px solid cyan;
+
+  background:
+    rgba(0, 255, 255, 0.02);
+
+  transition:
+    box-shadow 0.2s,
+    transform 0.2s;
+}
+
+#chain .blockchain-block:hover {
+  box-shadow:
+    0 0 15px
+    rgba(0, 255, 255, 0.25);
+
+  transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   BLOCK HEADER
+========================================================= */
+
+.blockchain-block-header {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  gap: 15px;
+
+  margin-bottom: 15px;
+
+  padding-bottom: 12px;
+
+  border-bottom:
+    1px solid
+    rgba(0, 255, 255, 0.25);
+}
+
+.blockchain-block-header h3 {
+  margin: 0;
+
+  font-size: 20px;
+}
+
+
+/* =========================================================
+   VALID / INVALID BLOCK BADGE
+========================================================= */
+
+.block-valid,
+.block-invalid {
+  display: inline-block;
+
+  padding: 5px 10px;
+
+  border-radius: 3px;
+
+  font-size: 12px;
+
+  font-weight: bold;
+
+  white-space: nowrap;
+}
+
+.block-valid {
+  border: 1px solid cyan;
+
+  color: cyan;
+
+  background:
+    rgba(0, 255, 255, 0.08);
+}
+
+.block-invalid {
+  border: 1px solid #ff4d4d;
+
+  color: #ff4d4d;
+
+  background:
+    rgba(255, 0, 0, 0.08);
+}
+
+
+/* =========================================================
+   BLOCK INFORMATION
+========================================================= */
+
+.blockchain-block p {
+  margin: 9px 0;
+
+  line-height: 1.5;
+}
+
+.blockchain-block strong {
+  color: #9fffff;
+}
+
+
+/* =========================================================
+   HASH SECTION
+========================================================= */
+
+.hash-section {
+  margin-top: 15px;
+
+  padding: 12px;
+
+  border:
+    1px solid
+    rgba(0, 255, 255, 0.25);
+
+  background:
+    rgba(0, 0, 0, 0.3);
+}
+
+.hash-section p {
+  margin-top: 0;
+
+  margin-bottom: 8px;
+
+  color: #9fffff;
+}
+
+.hash-section code {
+  display: block;
+
+  width: 100%;
+
+  padding: 10px;
+
+  background: #000000;
+
+  border:
+    1px solid
+    rgba(0, 255, 255, 0.25);
+
+  color: cyan;
+
+  font-family:
+    "Courier New",
+    Courier,
+    monospace;
+
+  font-size: 12px;
+
+  line-height: 1.5;
+
+  word-break: break-all;
+
+  overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   CHAIN LINK
+========================================================= */
+
+.chain-link {
+  margin-top: 15px !important;
+
+  padding-top: 10px;
+
+  border-top:
+    1px solid
+    rgba(0, 255, 255, 0.15);
+
+  color: cyan;
+
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   LEGACY BLOCKCHAIN ELEMENTS
+========================================================= */
+
+#chain .card p {
+  line-height: 1.5;
+}
+
+#chain small {
+  color: #7fffff;
+
+  font-family:
+    "Courier New",
+    monospace;
+
+  font-size: 12px;
+
+  word-break: break-all;
+}
+
+
+/* =========================================================
+   MONTHLY SUMMARY
+========================================================= */
+
+#summary {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 10px;
+}
+
+#summary .card {
+  margin: 0;
+
+  padding: 15px;
+}
+
+
+/* =========================================================
+   PLAN
+========================================================= */
+
+#planBox {
+  line-height: 1.6;
+}
+
+#planBox p {
+  border-left: 2px solid cyan;
+
+  padding-left: 12px;
+
+  margin: 10px 0;
+}
+
+
+/* =========================================================
+   ESTIMATE BREAKDOWN
+========================================================= */
+
+#estimateBreakdown {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 15px;
+}
+
+#estimateBreakdown .card {
+  margin: 0;
+
+  padding: 18px;
+}
+
+#estimateBreakdown .card h4 {
+  margin-top: 0;
+
+  font-size: 18px;
+}
+
+#estimateBreakdown .card p {
+  margin: 7px 0;
+}
+
+
+/* =========================================================
+   ALERTS
+========================================================= */
+
+#alerts {
+  color: #9fffff;
+
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   AI PREDICTION
+========================================================= */
+
+#prediction {
+  color: #9fffff;
+
+  font-size: 16px;
+
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   BUDGET
+========================================================= */
+
+#budget input {
+  min-width: 250px;
+}
+
+#budget button {
+  margin: 5px;
+}
+
+
+/* =========================================================
+   SCROLLBARS
+========================================================= */
+
+::-webkit-scrollbar {
+  width: 8px;
+
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #050816;
+}
+
+::-webkit-scrollbar-thumb {
+  background: cyan;
+
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #ffffff;
+}
+
+
+/* =========================================================
+   SELECTION
+========================================================= */
+
+::selection {
+  background: cyan;
+
   color: black;
 }
 
-.card {
-  border: 1px solid cyan;
-  padding: 10px;
-  margin: 10px;
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+
+  .analytics-summary {
+    grid-template-columns:
+      repeat(3, 1fr);
+  }
+
+  #estimateBreakdown {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+
+  .blockchain-stats {
+    grid-template-columns:
+      repeat(3, 1fr);
+  }
+
 }
 
-/* MOBILE */
-@media(max-width:768px){
-  .sidebar { position: relative; width:100%; height:auto; }
-  .main { margin-left:0; }
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+
+  .sidebar {
+    position: relative;
+
+    width: 100%;
+
+    height: auto;
+
+    border-right: none;
+
+    border-bottom: 1px solid cyan;
+
+    padding: 15px;
+  }
+
+  .sidebar h2 {
+    margin-bottom: 15px;
+  }
+
+  .sidebar button {
+    width: 100%;
+
+    margin: 5px 0;
+
+    text-align: center;
+  }
+
+  .main {
+    margin-left: 0;
+
+    width: 100%;
+
+    padding: 15px;
+  }
+
+  .page > h2 {
+    font-size: 24px;
+  }
+
+  .result-grid {
+    grid-template-columns:
+      1fr;
+  }
+
+  .analytics-summary {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+
+  #estimateBreakdown {
+    grid-template-columns:
+      1fr;
+  }
+
+  .estimate-row {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+  .estimate-row input,
+  .estimate-row button {
+    width: 100%;
+
+    min-width: 0;
+  }
+
+  .primary-button {
+    width: 100%;
+  }
+
+  .meter {
+    padding: 15px;
+  }
+
+  .meter p {
+    font-size: 16px;
+  }
+
+
+  /* ---------------------------------------------------------
+     Blockchain mobile
+  --------------------------------------------------------- */
+
+  .blockchain-stats {
+    grid-template-columns:
+      1fr;
+  }
+
+  .blockchain-block-header {
+    flex-direction: column;
+
+    align-items: flex-start;
+  }
+
+  .block-valid,
+  .block-invalid {
+    align-self: flex-start;
+  }
+
+  #chain .blockchain-block {
+    padding: 15px;
+  }
+
+  .hash-section code {
+    font-size: 10px;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+  .center {
+    margin-top: 40px;
+
+    width: calc(100% - 30px);
+
+    padding: 20px;
+  }
+
+  .center input {
+    width: 100%;
+
+    margin: 5px 0;
+  }
+
+  .center button {
+    width: 100%;
+
+    margin-top: 10px;
+  }
+
+  .main {
+    padding: 10px;
+  }
+
+  .analytics-summary {
+    grid-template-columns:
+      1fr;
+  }
+
+  .card {
+    padding: 14px;
+  }
+
+  #applianceList {
+    flex-direction: column;
+  }
+
+  .appliance-btn {
+    width: 100%;
+  }
+
+  #budget input {
+    width: 100%;
+
+    min-width: 0;
+  }
+
+  #budget button {
+    width: 100%;
+
+    margin: 5px 0;
+  }
+
+  .result-box strong {
+    font-size: 21px;
+  }
+
+  .blockchain-summary h2 {
+    font-size: 20px;
+  }
+
+  .blockchain-stats p {
+    font-size: 20px;
+  }
+
+  .blockchain-block-header h3 {
+    font-size: 18px;
+  }
+
+}
+/* =========================================================
+   BLOCKCHAIN BILLING — POLISHED UI
+========================================================= */
+
+#blockchain {
+  max-width: 1200px;
+}
+
+.blockchain-header {
+  margin-bottom: 25px;
+}
+
+.blockchain-subtitle {
+  color: #8aa;
+  margin-top: -10px;
+  margin-bottom: 25px;
+}
+
+
+/* =========================================================
+   INTEGRITY PANEL
+========================================================= */
+
+.blockchain-integrity {
+  border: 1px solid cyan;
+  padding: 25px;
+  margin-bottom: 30px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(0, 255, 255, 0.08),
+      rgba(0, 255, 255, 0.015)
+    );
+
+  box-shadow:
+    0 0 20px rgba(0, 255, 255, 0.15);
+
+  text-align: center;
+}
+
+.integrity-title {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.integrity-status {
+  display: inline-block;
+
+  padding: 10px 22px;
+
+  border: 1px solid #00ff88;
+
+  color: #00ff88;
+
+  font-weight: bold;
+
+  letter-spacing: 2px;
+
+  margin-bottom: 25px;
+
+  box-shadow:
+    0 0 12px rgba(0, 255, 136, 0.25);
+}
+
+
+/* =========================================================
+   BLOCKCHAIN STATISTICS
+========================================================= */
+
+.blockchain-stats {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, 1fr);
+
+  gap: 15px;
+}
+
+.blockchain-stat {
+  border: 1px solid rgba(0, 255, 255, 0.45);
+
+  padding: 18px;
+
+  background:
+    rgba(0, 255, 255, 0.025);
+}
+
+.blockchain-stat-value {
+  display: block;
+
+  font-size: 28px;
+
+  font-weight: bold;
+
+  margin-bottom: 6px;
+}
+
+.blockchain-stat-label {
+  display: block;
+
+  color: #8fffff;
+
+  font-size: 13px;
+
+  text-transform: uppercase;
+
+  letter-spacing: 1px;
+}
+
+
+/* =========================================================
+   BLOCKCHAIN CHAIN
+========================================================= */
+
+.blockchain-chain {
+  position: relative;
+}
+
+.blockchain-block-wrapper {
+  position: relative;
+
+  padding-bottom: 35px;
+}
+
+
+/* Chain connector */
+
+.blockchain-connector {
+  width: 2px;
+
+  height: 35px;
+
+  background: cyan;
+
+  opacity: 0.5;
+
+  margin: 0 auto;
+}
+
+.blockchain-arrow {
+  text-align: center;
+
+  color: cyan;
+
+  font-size: 20px;
+
+  line-height: 1;
+}
+
+
+/* =========================================================
+   BLOCK CARD
+========================================================= */
+
+.blockchain-block {
+  border: 1px solid rgba(0, 255, 255, 0.65);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(0, 255, 255, 0.055),
+      rgba(0, 0, 0, 0.25)
+    );
+
+  box-shadow:
+    0 0 12px rgba(0, 255, 255, 0.08);
+
+  overflow: hidden;
+
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s,
+    border-color 0.2s;
+}
+
+.blockchain-block:hover {
+  transform: translateY(-2px);
+
+  border-color: cyan;
+
+  box-shadow:
+    0 0 22px rgba(0, 255, 255, 0.2);
+}
+
+
+/* =========================================================
+   BLOCK HEADER
+========================================================= */
+
+.block-header {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  gap: 15px;
+
+  padding: 18px 20px;
+
+  border-bottom:
+    1px solid rgba(0, 255, 255, 0.2);
+}
+
+.block-number {
+  margin: 0;
+
+  font-size: 20px;
+}
+
+.block-date {
+  color: #8fffff;
+
+  font-size: 13px;
+
+  margin-top: 5px;
+}
+
+.block-status {
+  border: 1px solid #00ff88;
+
+  color: #00ff88;
+
+  padding: 6px 10px;
+
+  font-size: 12px;
+
+  font-weight: bold;
+
+  white-space: nowrap;
+}
+
+.block-status.invalid {
+  border-color: #ff4444;
+
+  color: #ff4444;
+}
+
+
+/* =========================================================
+   BLOCK METRICS
+========================================================= */
+
+.block-metrics {
+  display: grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap: 15px;
+
+  padding: 20px;
+}
+
+.block-metric {
+  border:
+    1px solid rgba(0, 255, 255, 0.25);
+
+  padding: 15px;
+}
+
+.block-metric-label {
+  display: block;
+
+  color: #8fffff;
+
+  font-size: 12px;
+
+  text-transform: uppercase;
+
+  letter-spacing: 1px;
+
+  margin-bottom: 8px;
+}
+
+.block-metric-value {
+  font-size: 22px;
+
+  font-weight: bold;
+}
+
+
+/* =========================================================
+   HASH SECTION
+========================================================= */
+
+.hash-section {
+  padding: 20px;
+
+  border-top:
+    1px solid rgba(0, 255, 255, 0.15);
+}
+
+.hash-row {
+  margin-bottom: 18px;
+}
+
+.hash-row:last-child {
+  margin-bottom: 0;
+}
+
+.hash-label {
+  display: block;
+
+  color: #8fffff;
+
+  font-size: 12px;
+
+  text-transform: uppercase;
+
+  letter-spacing: 1px;
+
+  margin-bottom: 7px;
+}
+
+.hash-value {
+  display: block;
+
+  padding: 10px;
+
+  border:
+    1px solid rgba(0, 255, 255, 0.2);
+
+  background:
+    rgba(0, 0, 0, 0.35);
+
+  color: #bfffff;
+
+  font-family:
+    "Courier New",
+    monospace;
+
+  font-size: 12px;
+
+  line-height: 1.5;
+
+  word-break: break-all;
+}
+
+
+/* =========================================================
+   VERIFICATION RESULTS
+========================================================= */
+
+.block-verification {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 10px;
+
+  padding: 15px 20px;
+
+  border-top:
+    1px solid rgba(0, 255, 255, 0.15);
+}
+
+.verification-item {
+  padding: 7px 11px;
+
+  border: 1px solid #00ff88;
+
+  color: #00ff88;
+
+  font-size: 12px;
+}
+
+.verification-item.invalid {
+  border-color: #ff4444;
+
+  color: #ff4444;
+}
+
+
+/* =========================================================
+   EMPTY / ERROR STATE
+========================================================= */
+
+.blockchain-empty {
+  text-align: center;
+
+  padding: 50px 20px;
+
+  border: 1px dashed rgba(0, 255, 255, 0.4);
+
+  color: #8fffff;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 768px) {
+
+  .blockchain-stats {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+
+  .block-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .block-header {
+    flex-direction: column;
+
+    align-items: flex-start;
+  }
+
+}
+
+@media (max-width: 480px) {
+
+  .blockchain-stats {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+/* =========================================================
+   BLOCKCHAIN POLISH
+========================================================= */
+
+#blockchain {
+  max-width: 1200px;
+}
+
+#blockchain > h2 {
+  font-size: 30px;
+  margin-bottom: 5px;
+}
+
+#blockchain > p {
+  color: #9fffff;
+  margin-top: 0;
+}
+
+
+/* =========================================================
+   BLOCKCHAIN INTEGRITY PANEL
+========================================================= */
+
+.blockchain-integrity {
+  border: 1px solid cyan;
+  padding: 22px;
+  margin: 20px 0 25px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(0, 255, 255, 0.08),
+      rgba(0, 255, 255, 0.015)
+    );
+
+  box-shadow:
+    0 0 20px rgba(0, 255, 255, 0.18);
+}
+
+.blockchain-integrity.valid {
+  border-color: #00ff99;
+
+  box-shadow:
+    0 0 20px rgba(0, 255, 153, 0.18);
+}
+
+.blockchain-integrity.invalid {
+  border-color: #ff4444;
+
+  box-shadow:
+    0 0 20px rgba(255, 68, 68, 0.18);
+}
+
+.integrity-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 20px;
+
+  flex-wrap: wrap;
+
+  margin-bottom: 20px;
+}
+
+.integrity-title {
+  margin: 0;
+
+  font-size: 20px;
+}
+
+.integrity-status {
+  padding: 7px 14px;
+
+  border: 1px solid #00ff99;
+
+  color: #00ff99;
+
+  font-weight: bold;
+
+  letter-spacing: 1px;
+}
+
+.integrity-status.invalid {
+  border-color: #ff4444;
+
+  color: #ff4444;
+}
+
+
+/* =========================================================
+   BLOCKCHAIN STATISTICS
+========================================================= */
+
+.blockchain-stats {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, 1fr);
+
+  gap: 12px;
+}
+
+.blockchain-stat {
+  border: 1px solid rgba(0, 255, 255, 0.35);
+
+  padding: 16px;
+
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.blockchain-stat-label {
+  display: block;
+
+  font-size: 13px;
+
+  color: #8fffff;
+
+  margin-bottom: 7px;
+}
+
+.blockchain-stat-value {
+  font-size: 24px;
+
+  font-weight: bold;
+
+  color: cyan;
+}
+
+
+/* =========================================================
+   BLOCKCHAIN LEDGER
+========================================================= */
+
+.blockchain-ledger {
+  position: relative;
+
+  padding-left: 25px;
+}
+
+
+/* vertical blockchain connection */
+
+.blockchain-ledger::before {
+  content: "";
+
+  position: absolute;
+
+  left: 7px;
+
+  top: 0;
+
+  bottom: 0;
+
+  width: 2px;
+
+  background: rgba(0, 255, 255, 0.35);
+}
+
+
+/* =========================================================
+   BLOCK CARD
+========================================================= */
+
+.blockchain-block {
+  position: relative;
+
+  border: 1px solid rgba(0, 255, 255, 0.4);
+
+  padding: 20px;
+
+  margin-bottom: 25px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(0, 255, 255, 0.045),
+      rgba(0, 0, 0, 0.35)
+    );
+
+  transition:
+    transform 0.2s,
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.blockchain-block:hover {
+  transform: translateX(3px);
+
+  border-color: cyan;
+
+  box-shadow:
+    0 0 15px rgba(0, 255, 255, 0.15);
+}
+
+
+/* connection node */
+
+.blockchain-block::before {
+  content: "";
+
+  position: absolute;
+
+  left: -25px;
+
+  top: 28px;
+
+  width: 10px;
+
+  height: 10px;
+
+  border: 2px solid cyan;
+
+  background: #050816;
+
+  border-radius: 50%;
+
+  box-shadow:
+    0 0 8px cyan;
+}
+
+
+/* =========================================================
+   BLOCK HEADER
+========================================================= */
+
+.block-header {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  gap: 15px;
+
+  flex-wrap: wrap;
+
+  margin-bottom: 15px;
+}
+
+.block-number {
+  font-size: 20px;
+
+  font-weight: bold;
+}
+
+.block-date {
+  color: #9fffff;
+}
+
+
+/* =========================================================
+   VERIFIED BADGE
+========================================================= */
+
+.block-verified {
+  display: inline-block;
+
+  padding: 5px 10px;
+
+  border: 1px solid #00ff99;
+
+  color: #00ff99;
+
+  font-size: 12px;
+
+  font-weight: bold;
+
+  letter-spacing: 1px;
+}
+
+.block-invalid {
+  border-color: #ff4444;
+
+  color: #ff4444;
+}
+
+
+/* =========================================================
+   BLOCK METRICS
+========================================================= */
+
+.block-metrics {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, 1fr);
+
+  gap: 10px;
+
+  margin-bottom: 15px;
+}
+
+.block-metric {
+  padding: 12px;
+
+  border:
+    1px solid
+    rgba(0, 255, 255, 0.2);
+
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.block-metric-label {
+  display: block;
+
+  font-size: 12px;
+
+  color: #8fffff;
+
+  margin-bottom: 5px;
+}
+
+.block-metric-value {
+  font-size: 18px;
+
+  font-weight: bold;
+}
+
+
+/* =========================================================
+   HASH DISPLAY
+========================================================= */
+
+.hash-section {
+  margin-top: 15px;
+}
+
+.hash-label {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #9fffff;
+
+  font-size: 13px;
+}
+
+.hash-value {
+  display: block;
+
+  padding: 10px;
+
+  border:
+    1px solid
+    rgba(0, 255, 255, 0.25);
+
+  background: #02040c;
+
+  color: #7fffff;
+
+  font-family:
+    Consolas,
+    "Courier New",
+    monospace;
+
+  font-size: 12px;
+
+  line-height: 1.5;
+
+  word-break: break-all;
+}
+
+
+/* =========================================================
+   VALIDATION DETAILS
+========================================================= */
+
+.validation-details {
+  margin-top: 15px;
+
+  padding-top: 12px;
+
+  border-top:
+    1px solid
+    rgba(0, 255, 255, 0.15);
+}
+
+.validation-ok {
+  color: #00ff99;
+
+  font-size: 13px;
+
+  margin: 5px 0;
+}
+
+.validation-error {
+  color: #ff4444;
+
+  font-size: 13px;
+
+  margin: 5px 0;
+}
+
+
+/* =========================================================
+   BLOCKCHAIN RESPONSIVE
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .blockchain-stats {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+
+}
+
+@media (max-width: 600px) {
+
+  .blockchain-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .block-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .blockchain-ledger {
+    padding-left: 15px;
+  }
+
+  .blockchain-block::before {
+    display: none;
+  }
+
+  .blockchain-ledger::before {
+    display: none;
+  }
+
+}
+/* =========================================================
+   SMART DASHBOARD
+========================================================= */
+
+.dashboard-header {
+  margin-bottom: 25px;
+}
+
+.dashboard-subtitle {
+  margin-top: -15px;
+  color: #8fffff;
+}
+
+
+/* =========================================================
+   LIVE METRIC GRID
+========================================================= */
+
+.dashboard-metrics {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, 1fr);
+
+  gap: 15px;
+
+  margin-bottom: 20px;
+}
+
+.dashboard-metric {
+  position: relative;
+
+  border: 1px solid rgba(0, 255, 255, 0.5);
+
+  padding: 20px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(0, 255, 255, 0.06),
+      rgba(0, 255, 255, 0.01)
+    );
+
+  box-shadow:
+    0 0 12px rgba(0, 255, 255, 0.08);
+
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+
+.dashboard-metric:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 0 20px rgba(0, 255, 255, 0.18);
+}
+
+.dashboard-metric-label {
+  display: block;
+
+  color: #8fffff;
+
+  font-size: 12px;
+
+  text-transform: uppercase;
+
+  letter-spacing: 1.5px;
+
+  margin-bottom: 10px;
+}
+
+.dashboard-metric-value {
+  display: block;
+
+  font-size: 30px;
+
+  font-weight: bold;
+
+  color: cyan;
+}
+
+.dashboard-metric-unit {
+  font-size: 13px;
+
+  color: #8fffff;
+
+  margin-left: 4px;
+}
+
+
+/* =========================================================
+   LIVE CHART CARD
+========================================================= */
+
+.dashboard-chart-card {
+  border: 1px solid cyan;
+
+  padding: 20px;
+
+  margin-bottom: 20px;
+
+  background:
+    rgba(0, 255, 255, 0.025);
+
+  box-shadow:
+    0 0 15px rgba(0, 255, 255, 0.08);
+}
+
+.dashboard-chart-header {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-bottom: 15px;
+
+  flex-wrap: wrap;
+
+  gap: 10px;
+}
+
+.dashboard-chart-header h3 {
+  margin: 0;
+}
+
+.live-indicator {
+  font-size: 12px;
+
+  color: #00ff99;
+
+  border: 1px solid #00ff99;
+
+  padding: 5px 9px;
+
+  letter-spacing: 1px;
+}
+
+.dashboard-chart-wrapper {
+  position: relative;
+
+  height: 300px;
+}
+
+
+/* =========================================================
+   AI + ALERT GRID
+========================================================= */
+
+.dashboard-info-grid {
+  display: grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap: 20px;
+
+  margin-bottom: 20px;
+}
+
+.dashboard-info-card {
+  border: 1px solid rgba(0, 255, 255, 0.5);
+
+  padding: 20px;
+
+  background:
+    rgba(0, 255, 255, 0.025);
+}
+
+.dashboard-info-card h3 {
+  margin-top: 0;
+
+  margin-bottom: 15px;
+}
+
+.forecast-value {
+  font-size: 25px;
+
+  font-weight: bold;
+
+  color: cyan;
+
+  margin: 10px 0;
+}
+
+.forecast-meta {
+  color: #8fffff;
+
+  font-size: 13px;
+
+  line-height: 1.7;
+}
+
+.alert-normal {
+  border-color: #00ff99;
+
+  color: #00ff99;
+}
+
+.alert-warning {
+  border-color: #ffaa00;
+
+  color: #ffaa00;
+}
+
+.alert-danger {
+  border-color: #ff4444;
+
+  color: #ff4444;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1000px) {
+
+  .dashboard-metrics {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+
+}
+
+@media (max-width: 700px) {
+
+  .dashboard-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+@media (max-width: 500px) {
+
+  .dashboard-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-chart-wrapper {
+    height: 240px;
+  }
+
+}
+
+/* AI Forecast Footer */
+.forecast-footer {
+  margin-top: 16px;
+  font-size: 11px;
+  line-height: 1.7;
+  opacity: 0.65;
+}
+
+/* =========================================================
+   AUTHENTICATION
+========================================================= */
+
+#loginPage {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+#loginForm,
+#signupForm {
+  width: 100%;
+}
+
+#loginForm input,
+#signupForm input {
+  width: 100%;
+  box-sizing: border-box;
+  margin: 8px 0;
+}
+
+#loginForm button,
+#signupForm button {
+  margin-top: 10px;
+}
+
+.auth-switch {
+  margin-top: 18px;
+  text-align: center;
+  opacity: 0.85;
+}
+
+.auth-link {
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  font: inherit;
+  cursor: pointer;
+  text-decoration: underline;
 }

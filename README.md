@@ -1,261 +1,142 @@
-# ⚡ Intelligent Energy Management and Secure Billing Platform
+# Intelligent Energy Management and Secure Billing Platform
 
-## AI-Driven Smart Energy Management with Predictive Analytics and Blockchain-Secured Billing
+## Overview
+An intelligent household energy-management platform combining real-time energy simulation, consumption forecasting, budget monitoring, personalized energy-saving recommendations, alerts, daily/monthly billing, and a tamper-evident hash-linked billing ledger.
 
-An advanced energy management platform designed to monitor, analyze, predict, and optimize electricity consumption in residential environments. The system combines real-time appliance monitoring, machine learning-based consumption forecasting, budget optimization, and blockchain-secured billing to improve energy efficiency and transparency.
+### Simulation model
+- 1 real hour = 1 simulated hour
 
-This project was developed as a Final Year Engineering Capstone Project and demonstrates the integration of modern software engineering practices, predictive analytics, and secure digital record management within the energy domain.
+- 24 real hours = 1 simulated day
+- 30 real days = 1 simulated billing period
 
----
+## What the Project Does
+The system models household appliances, calculates power and hourly energy, persists consumption, forecasts future demand and bills, monitors budgets, generates recommendations, creates daily billing records, and maintains a hash-linked billing ledger.
 
-## Executive Summary
+## Main Features
+1. Live appliance/energy simulation
+2. Persistent hourly energy records
+3. Load-aware household forecasting
+4. Personalized energy-saving plans
+5. Budget monitoring and alerts
+6. Daily electricity billing
+7. Hash-linked blockchain billing records
+8. Hash and chain-link validation
+9. 30-day monthly billing summaries
 
-Energy consumption is increasing rapidly, making efficient energy management a critical requirement for households and organizations. Traditional electricity billing systems provide limited visibility into appliance-level consumption and offer minimal support for proactive energy optimization.
-
-This platform addresses these limitations by providing:
-
-* Real-time energy monitoring
-* Appliance-level power tracking
-* Consumption analytics
-* Budget planning
-* AI-based energy forecasting
-* Blockchain-secured billing records
-* Personalized energy-saving recommendations
-
-The solution enables users to understand consumption behavior, reduce electricity costs, and maintain transparent billing records through a secure digital ledger.
-
----
-
-## Key Features
-
-| Feature                    | Description                                        |
-| -------------------------- | -------------------------------------------------- |
-| Real-Time Monitoring       | Tracks live power consumption and energy usage     |
-| Appliance Control          | Manage and monitor connected appliances            |
-| Energy Analytics           | Hourly, weekly, and monthly consumption analysis   |
-| AI Prediction              | Machine learning-based next-day energy forecasting |
-| Budget Management          | Monthly budget planning and consumption tracking   |
-| Smart Recommendations      | Personalized energy-saving suggestions             |
-| Alert System               | High-consumption detection and notifications       |
-| Blockchain Billing         | Secure and tamper-resistant billing records        |
-| Dynamic Appliance Addition | Add custom appliances with power ratings           |
-| Monthly Reports            | Detailed billing and energy summaries              |
-
----
-
-## System Architecture
-<img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/f90824e1-6d02-42fb-87e3-40ced01aa909" />
-
-
-
+## Architecture
+```text
+Frontend (HTML/CSS/JavaScript)
+              |
+              v
+        FastAPI Backend
+              |
+      +-------+--------+----------------+
+      |                |                |
+      v                v                v
+ Simulation       Forecasting      Recommendation
+   Engine           Engine            Engine
+      |                |                |
+      +----------------+----------------+
+                       |
+                       v
+                    SQLite
+                       |
+       +---------------+----------------+
+       |               |                |
+       v               v                v
+ EnergyRecord    DailyRecord      MonthlyBill
+                       |
+                       v
+                BlockchainBlock
+                       |
+                       v
+              Hash/Link Validation
 ```
 
----
+## Energy Calculation
+```text
+Energy (kWh) = Power (W) / 1000
+```
+For a 150 W fan:
+```text
+150 / 1000 = 0.15 kWh per simulated hour
+```
 
-## Machine Learning Module
+## Forecasting
+`GET /household-forecast/{user}` returns next-hour, next-six-hour, projected daily/monthly consumption and projected monthly bill. The endpoint reports the method as **Load-aware weighted forecast**.
 
-The platform incorporates a predictive analytics engine using Linear Regression to estimate future energy consumption based on historical usage patterns.
+## Personalized Plans
+`GET /plan/{user}` generates recommendations using consumption history, budget, forecasts, and appliance usage. Example: identifying a fan as the largest contributor and recommending reduced usage.
 
-### Objectives
+## Alerts
+`GET /alerts/{user}` reports high active appliance usage together with forecast and budget information.
 
-* Identify consumption trends
-* Forecast next-day energy usage
-* Support proactive energy planning
-* Improve budget management
+## Daily Billing
+After 24 simulated hours:
+```text
+Hourly records -> DailyRecord -> daily energy -> daily bill
+```
 
-### Technologies
+## Blockchain Billing
+Each completed simulated day creates a `BlockchainBlock` containing block number, date, energy, bill, previous hash, and current hash. The API validates the stored hash and previous-hash linkage.
 
-* Scikit-Learn
-* NumPy
-* Python
+A verified block reports:
+```text
+hash_valid = true
+linkage_valid = true
+valid = true
+```
 
----
+## Monthly Billing
+After 30 completed simulated days, a `MonthlyBill` is created containing month number, year, expected budget, and actual bill. This billing period consists of 30 real days.
 
-## Blockchain Security Layer
+## Main API Endpoints
+| Endpoint | Purpose |
+|---|---|
+| `POST /login` | Login |
+| `GET /status/{user}` | Current household state |
+| `GET /step/{user}` | Advance one simulated hour |
+| `GET /household-forecast/{user}` | Household forecast |
+| `GET /plan/{user}` | Energy-saving plan |
+| `GET /alerts/{user}` | Alerts |
+| `GET /summary/{user}` | Monthly billing summary |
+| `GET /blockchain/{user}` | Blockchain billing ledger |
+| `POST /budget/{user}/{amount}` | Set budget |
+| `POST /toggle/{user}/{device}` | Toggle appliance |
+| `POST /add/{user}` | Add appliance |
 
-A lightweight blockchain mechanism is implemented to secure billing records.
-
-### Features
-
-* SHA-256 hashing
-* Linked blocks using previous hashes
-* Tamper detection capability
-* Immutable billing history
-* Secure monthly billing storage
-
-Each billing record is stored as a block containing:
-
-* Date
-* Energy Consumption
-* Billing Amount
-* Previous Block Hash
-* Current Block Hash
-
-This ensures billing integrity and transparency.
-
----
+## Database Entities
+- `EnergyRecord` Ã¢â‚¬â€ hourly power/energy
+- `DailyRecord` Ã¢â‚¬â€ completed daily consumption and bill
+- `BlockchainBlock` Ã¢â‚¬â€ billing ledger and hashes
+- `MonthlyBill` Ã¢â‚¬â€ completed billing-period summary
+- `SimulationState` Ã¢â‚¬â€ current simulated hour/day/energy
+- `Appliance` Ã¢â‚¬â€ appliance configuration and state
 
 ## Technology Stack
+Python, FastAPI, SQLAlchemy, SQLite, Uvicorn, HTML, CSS, JavaScript, Python forecasting/ML components, SHA-256-based hashing.
 
-### Backend
-
-* Python
-* FastAPI
-* NumPy
-* Scikit-Learn
-
-### Frontend
-
-* HTML5
-* CSS3
-* JavaScript
-* Chart.js
-
-### Security
-
-* SHA-256 Blockchain Implementation
-
-### Development Environment
-
-* Visual Studio Code
-* Git
-* GitHub
-
----
-
-## Project Structure
-
-```text
-Intelligent-Energy-Management-and-Secure-Billing-Platform/
-
-├── backend/
-│   └── main.py
-│
-├── frontend/
-│   ├── index.html
-│   ├── style.css
-│   └── script.js
-│
-├── screenshots/
-│
-├── requirements.txt
-├── .gitignore
-├── LICENSE
-└── README.md
-```
-
----
-
-## Installation Guide
-
-### Clone Repository
-
-```bash
-git clone https://github.com/yourusername/Intelligent-Energy-Management-and-Secure-Billing-Platform.git
-```
-
-### Install Dependencies
-
-```bash
+## Running
+```powershell
+python -m venv venv
+venv\Scripts\Activate.ps1
 pip install -r requirements.txt
-```
-
-### Start Backend
-
-```bash
+python -m py_compile backend\main.py
 uvicorn backend.main:app --reload
 ```
 
-### Launch Frontend
-
-Open:
-
+Backend:
 ```text
-frontend/index.html
+http://127.0.0.1:8000
 ```
 
-in your browser.
+## Demonstration Flow
+Login -> observe live consumption -> forecasting -> energy-saving plan -> alerts -> complete a simulated day -> inspect daily billing/blockchain -> complete 30 simulated days -> inspect monthly summary -> verify blockchain integrity.
 
----
+## Current Verification
+The implementation was tested for login, persistent simulation state, appliance persistence, real-time hourly simulation, daily rollover, daily/monthly records, forecasting, plans, alerts, blockchain records, hash verification, chain linkage, frontend rendering, and clean browser-console integration.
 
-## API Modules
 
-### User Management
 
-* Login
-* Authentication
 
-### Appliance Management
-
-* Add Appliance
-* Toggle Appliance Status
-
-### Energy Monitoring
-
-* Power Calculation
-* Energy Tracking
-* Usage Analytics
-
-### Prediction Engine
-
-* Consumption Forecasting
-
-### Blockchain Services
-
-* Block Generation
-* Secure Billing Records
-
-### Budget Services
-
-* Monthly Budget Tracking
-* Energy Optimization Plans
-
----
-
-## Future Enhancements
-
-* IoT Smart Meter Integration
-* Cloud-Based Data Storage
-* Mobile Application Support
-* Deep Learning Forecast Models
-* Smart Grid Integration
-* Renewable Energy Monitoring
-* Real-Time Device Synchronization
-* Advanced Energy Optimization Algorithms
-
----
-
-## Project Highlights
-
-✔ Real-Time Energy Monitoring
-
-✔ Machine Learning-Based Prediction
-
-✔ Blockchain-Secured Billing
-
-✔ Interactive Analytics Dashboard
-
-✔ Budget Optimization
-
-✔ Smart Energy Recommendations
-
-✔ Modular FastAPI Architecture
-
-✔ Modern Web-Based User Interface
-
----
-
-## Author
-
-**Tamizh Arasi T**
-
-Engineering Graduate | Data Analytics | AI & Machine Learning Enthusiast
-
-GitHub: https://github.com/Tamizht25
-
----
-
-### Final Year Capstone Project
-
-Designed and developed to demonstrate the integration of Artificial Intelligence, Predictive Analytics, Blockchain Security, and Modern Web Technologies for intelligent energy management and transparent billing systems.
 
