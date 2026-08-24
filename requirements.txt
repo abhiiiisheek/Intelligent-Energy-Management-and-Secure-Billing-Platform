@@ -4,3 +4,5 @@ numpy
 scikit-learn
 argon2-cffi
 sqlalchemy
+pandas
+pandas
