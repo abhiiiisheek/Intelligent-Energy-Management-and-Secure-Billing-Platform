@@ -1,8 +1,8 @@
-﻿// ============================================================
+// ============================================================
 // CONFIGURATION
 // ============================================================
 
-const API = "http://127.0.0.1:8000";
+const API = window.location.origin;
 
 let user = "";
 
@@ -1164,7 +1164,7 @@ async function loadAnalytics() {
 
             ${
               actual !== null
-                ? "â‚¹" +
+                ? "₹" +
                   actual.toFixed(2)
                 : "No data"
             }
@@ -1182,7 +1182,7 @@ async function loadAnalytics() {
 
             ${
               expected !== null
-                ? "â‚¹" +
+                ? "₹" +
                   expected.toFixed(2)
                 : "No data"
             }
@@ -2180,14 +2180,14 @@ async function loadSummary() {
 
             <p>
               Expected:
-              â‚¹${Number(
+              ₹${Number(
                 m.expected
               ).toFixed(2)}
             </p>
 
             <p>
               Actual:
-              â‚¹${Number(
+              ₹${Number(
                 m.actual
               ).toFixed(2)}
             </p>
@@ -3128,6 +3128,7 @@ document.addEventListener(
 
   }
 );
+
 
 
 

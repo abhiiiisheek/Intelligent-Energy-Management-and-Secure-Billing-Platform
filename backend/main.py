@@ -1,7 +1,9 @@
-﻿from fastapi import FastAPI, HTTPException, Depends
+from fastapi import FastAPI, HTTPException, Depends
 from pydantic import BaseModel, Field
 from typing import List
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from datetime import datetime, timedelta
 from pathlib import Path
 import hashlib
@@ -65,6 +67,8 @@ def get_db():
 # ============================================================
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
+
+FRONTEND_DIR = PROJECT_ROOT / "frontend"
 
 MODEL_PATH = (
     PROJECT_ROOT
@@ -3009,4 +3013,28 @@ def budget(
         "msg": "updated"
     }
 
+
+
+
+
+# ============================================================
+# FRONTEND
+# ============================================================
+
+@app.get("/")
+def serve_frontend():
+
+    return FileResponse(
+        FRONTEND_DIR / "index.html"
+    )
+
+
+app.mount(
+    "/",
+    StaticFiles(
+        directory=FRONTEND_DIR,
+        html=True
+    ),
+    name="frontend"
+)
 
